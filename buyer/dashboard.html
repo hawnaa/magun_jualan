@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Buyer - Gunadarma Shop</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/buyer.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>🎓 Gunadarma Shop</h2>
+            <p class="user-role">Buyer</p>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item active">
+                <span class="icon">🏠</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="products.html" class="menu-item">
+                <span class="icon">🛍️</span>
+                <span>Cari Produk</span>
+            </a>
+            <a href="cart.html" class="menu-item">
+                <span class="icon">🛒</span>
+                <span>Keranjang</span>
+                <span class="badge" id="cartBadge">0</span>
+            </a>
+            <a href="profile.html" class="menu-item">
+                <span class="icon">👤</span>
+                <span>Profil</span>
+            </a>
+            <a href="#" class="menu-item" onclick="switchToSeller(); return false;" id="switchRoleBtn" style="display:none;">
+                <span class="icon">🔄</span>
+                <span>Mode Seller</span>
+            </a>
+            <!-- SAMPAI SINI -->
+            <a href="#" class="menu-item" onclick="logout()">
+                <span class="icon">🚪</span>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>Dashboard</h1>
+        </header>
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="welcome-card">
+                <h2>Selamat Datang, <span id="userNameWelcome">Buyer</span>! 👋</h2>
+                <p>Temukan berbagai produk dari mahasiswa Gunadarma</p>
+            </div>
+        </section>
+
+        <!-- Stats Cards -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🛍️</div>
+                    <div class="stat-info">
+                        <h3 id="totalProducts">0</h3>
+                        <p>Total Produk</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🛒</div>
+                    <div class="stat-info">
+                        <h3 id="cartItems">0</h3>
+                        <p>Item di Keranjang</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💼</div>
+                    <div class="stat-info">
+                        <h3 id="totalSellers">0</h3>
+                        <p>Total Seller</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
+        <!-- Featured Products -->
+        <section class="products-section">
+            <div class="section-header">
+                <h2>Produk Terbaru</h2>
+                <a href="products.html" class="btn-view-all">Lihat Semua →</a>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products akan dimuat dari JavaScript -->
+                <div class="loading">Memuat produk...</div>
+            </div>
+        </section>
+
+
+        <!-- Modal Detail Produk -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-body">
+            <img id="modalImage" src="" alt="Product" class="modal-image">
+            <div class="modal-info">
+                <h2 id="modalTitle"></h2>
+                <p class="modal-seller">Dijual oleh: <span id="modalSeller"></span></p>
+                <p class="modal-price" id="modalPrice"></p>
+                <p class="modal-stock">Stok: <span id="modalStock"></span></p>
+                <p class="modal-category">Kategori: <span id="modalCategory"></span></p>
+                <p class="modal-description" id="modalDescription"></p>
+                <div class="modal-actions">
+                    <button class="btn-add-cart" onclick="addToCartFromModal()">🛒 Tambah ke Keranjang</button>
+                    <button class="btn-contact-seller" onclick="contactSeller()">💬 Hubungi Seller</button>
+                    <button class="btn-view-detail" onclick="event.stopPropagation(); showProductDetail('${product.id}')">👁️ Detail</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/buyer.js"></script>
+</body>
+</html>

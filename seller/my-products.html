@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produk Saya - Gunadarma Shop</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/seller.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>🎓 Gunadarma Shop</h2>
+            <p class="user-role">Seller</p>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <span class="icon">🏠</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="my-products.html" class="menu-item active">
+                <span class="icon">📦</span>
+                <span>Produk Saya</span>
+            </a>
+            <a href="add-product.html" class="menu-item">
+                <span class="icon">➕</span>
+                <span>Tambah Produk</span>
+            </a>
+            <a href="profile.html" class="menu-item">
+                <span class="icon">👤</span>
+                <span>Profil</span>
+            </a>
+            <a href="#" class="menu-item" onclick="logout()">
+                <span class="icon">🚪</span>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>Produk Saya</h1>
+            <div class="header-user">
+                <span id="userName">Loading...</span>
+                <div class="user-avatar">👤</div>
+            </div>
+        </header>
+
+        <!-- Actions Bar -->
+        <section class="actions-bar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Cari produk..." class="search-input">
+                <button class="btn-search" onclick="searchMyProducts()">🔍 Cari</button>
+            </div>
+            <a href="add-product.html" class="btn-add-product">➕ Tambah Produk</a>
+        </section>
+
+        <!-- Products List -->
+        <section class="products-section">
+            <div class="section-header">
+                <h2>Semua Produk</h2>
+                <p class="products-count">Total: <span id="productsCount">0</span> produk</p>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <div class="loading">Memuat produk...</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2>Edit Produk</h2>
+            <form id="editForm" class="edit-form">
+                <input type="hidden" id="editProductId">
+                
+                <div class="form-group">
+                    <label>Nama Produk</label>
+                    <input type="text" id="editProductName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Harga</label>
+                    <input type="number" id="editPrice" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Stok</label>
+                    <input type="number" id="editStock" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select id="editCategory" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="Buku">Buku</option>
+                        <option value="Alat Tulis">Alat Tulis</option>
+                        <option value="Elektronik">Elektronik</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Makanan">Makanan & Minuman</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea id="editDescription" rows="4" required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">💾 Simpan Perubahan</button>
+                    <button type="button" class="btn-cancel" onclick="closeEditModal()">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/seller.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cari Produk - Gunadarma Shop</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/buyer.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>🎓 Gunadarma Shop</h2>
+            <p class="user-role">Buyer</p>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <span class="icon">🏠</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="products.html" class="menu-item active">
+                <span class="icon">🛍️</span>
+                <span>Cari Produk</span>
+            </a>
+            <a href="cart.html" class="menu-item">
+                <span class="icon">🛒</span>
+                <span>Keranjang</span>
+                <span class="badge" id="cartBadge">0</span>
+            </a>
+            <a href="profile.html" class="menu-item">
+                <span class="icon">👤</span>
+                <span>Profil</span>
+            </a>
+            <a href="#" class="menu-item" onclick="logout()">
+                <span class="icon">🚪</span>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>Cari Produk</h1>
+            <div class="header-user">
+                <span id="userName">Loading...</span>
+                <div class="user-avatar">👤</div>
+            </div>
+        </header>
+
+        <!-- Search Bar -->
+        <section class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Cari produk..." class="search-input">
+                <button class="btn-search" onclick="searchProducts()">🔍 Cari</button>
+            </div>
+        </section>
+
+        <!-- Products Grid -->
+        <section class="products-section">
+            <div class="section-header">
+                <h2>Semua Produk</h2>
+                <p class="products-count">Menampilkan <span id="productsCount">0</span> produk</p>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <div class="loading">Memuat produk...</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal Detail Produk -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Product" class="modal-image">
+                <div class="modal-info">
+                    <h2 id="modalTitle"></h2>
+                    <p class="modal-seller">Dijual oleh: <span id="modalSeller"></span></p>
+                    <p class="modal-price" id="modalPrice"></p>
+                    <p class="modal-stock">Stok: <span id="modalStock"></span></p>
+                    <p class="modal-category">Kategori: <span id="modalCategory"></span></p>
+                    <p class="modal-description" id="modalDescription"></p>
+                    <div class="modal-actions">
+                        <button class="btn-add-cart" onclick="addToCartFromModal()">🛒 Tambah ke Keranjang</button>
+                        <button class="btn-contact-seller" onclick="contactSeller()">💬 Hubungi Seller</button>
+                        <button class="btn-view-detail" onclick="event.stopPropagation(); showProductDetail('${product.id}')">👁️ Detail</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/buyer.js"></script>
+</body>
+</html>

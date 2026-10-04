@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Produk - Gunadarma Shop</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/seller.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>🎓 Gunadarma Shop</h2>
+            <p class="user-role">Seller</p>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <span class="icon">🏠</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="my-products.html" class="menu-item">
+                <span class="icon">📦</span>
+                <span>Produk Saya</span>
+            </a>
+            <a href="add-product.html" class="menu-item active">
+                <span class="icon">➕</span>
+                <span>Tambah Produk</span>
+            </a>
+            <a href="profile.html" class="menu-item">
+                <span class="icon">👤</span>
+                <span>Profil</span>
+            </a>
+            <a href="#" class="menu-item" onclick="logout()">
+                <span class="icon">🚪</span>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>Tambah Produk Baru</h1>
+            <div class="header-user">
+                <span id="userName">Loading...</span>
+                <div class="user-avatar">👤</div>
+            </div>
+        </header>
+
+        <!-- Add Product Form -->
+        <section class="add-product-section">
+            <div class="form-container">
+                <form id="addProductForm" class="product-form">
+                    <div class="form-grid">
+                        <!-- Left Column -->
+                        <div class="form-column">
+                            <div class="form-group">
+                                <label>Nama Produk *</label>
+                                <input type="text" id="productName" placeholder="Contoh: Buku Kalkulus" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Harga (Rp) *</label>
+                                    <input type="number" id="price" placeholder="50000" min="0" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Stok *</label>
+                                    <input type="number" id="stock" placeholder="10" min="0" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Kategori *</label>
+                                <select id="category" required>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="Buku">Buku</option>
+                                    <option value="Alat Tulis">Alat Tulis</option>
+                                    <option value="Elektronik">Elektronik</option>
+                                    <option value="Fashion">Fashion</option>
+                                    <option value="Makanan">Makanan & Minuman</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Deskripsi Produk *</label>
+                                <textarea id="description" rows="6" placeholder="Jelaskan detail produk..." required></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="form-column">
+                            <div class="form-group">
+                                <label>Gambar Produk *</label>
+                                <div class="upload-area" id="uploadArea">
+                                    <input type="file" id="productImage" accept="image/*" required hidden>
+                                    <div class="upload-placeholder" onclick="document.getElementById('productImage').click()">
+                                        <span class="upload-icon">📷</span>
+                                        <p>Klik untuk upload gambar</p>
+                                        <p class="upload-note">Format: JPG, PNG, WebP | Max: 10MB</p>
+                                    </div>
+                                    <img id="imagePreview" class="image-preview" style="display: none;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-submit">
+                            <span id="submitText">📤 Upload Produk</span>
+                            <span id="loadingText" style="display: none;">⏳ Mengupload...</span>
+                        </button>
+                        <button type="button" class="btn-cancel" onclick="window.location.href='my-products.html'">
+                            Batal
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/seller.js"></script>
+
+    <!-- Image Preview Script -->
+    <script>
+        document.getElementById('productImage').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('imagePreview');
+                    const placeholder = document.querySelector('.upload-placeholder');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    placeholder.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

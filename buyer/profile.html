@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - Gunadarma Shop</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/buyer.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>🎓 Gunadarma Shop</h2>
+            <p class="user-role">Buyer</p>
+        </div>
+        <nav class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <span class="icon">🏠</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="products.html" class="menu-item">
+                <span class="icon">🛍️</span>
+                <span>Cari Produk</span>
+            </a>
+            <a href="cart.html" class="menu-item">
+                <span class="icon">🛒</span>
+                <span>Keranjang</span>
+                <span class="badge" id="cartBadge">0</span>
+            </a>
+            <a href="profile.html" class="menu-item active">
+                <span class="icon">👤</span>
+                <span>Profil</span>
+            </a>
+            <a href="#" class="menu-item" onclick="logout()">
+                <span class="icon">🚪</span>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>Profil Saya</h1>
+            <div class="header-user">
+                <span id="userName">Loading...</span>
+                <div class="user-avatar">👤</div>
+            </div>
+        </header>
+
+        <!-- Profile Content -->
+        <section class="profile-section">
+            <div class="profile-container">
+                <!-- Profile Card -->
+                <div class="profile-card">
+                    <div class="profile-avatar">👤</div>
+                    <h2 id="profileName">Loading...</h2>
+                    <p class="profile-role">Buyer</p>
+                </div>
+
+                <!-- Profile Info -->
+                <div class="profile-info">
+                    <h3>Informasi Akun</h3>
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="email" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>No. WhatsApp</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Alamat Lengkap</label>
+                            <textarea id="address" rows="4" required></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-save">💾 Simpan Perubahan</button>
+                        </div>
+                        <div class="upgrade-section" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #f0f0f0;">
+                            <h4>Upgrade Akun</h4>
+                            <p>Ingin juga menjadi Seller?</p>
+                            <button type="button" class="btn-upgrade" onclick="upgradeToSeller()()">🚀 Jadi Seller Juga</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/buyer.js"></script>
+</body>
+</html>

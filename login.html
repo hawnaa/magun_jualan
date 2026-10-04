@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Gunadarma Shop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+<div class="auth-container">
+    <div class="auth-box">
+        <div class="auth-header">
+            <h1>🎓 Gunadarma Shop</h1>
+            <h2>Login ke Akun</h2>
+            <p>Selamat datang kembali!</p>
+        </div>
+
+        <form id="loginForm" class="auth-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Masukkan email Anda" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Masukkan password" required>
+            </div>
+
+            <!-- Pilihan role muncul kalau user punya lebih dari 1 role -->
+            <div class="form-group" id="roleSelection" style="display:none;">
+                <label>Pilih Role:</label>
+                <select id="loginRole">
+                    <!-- Options akan diisi lewat JS -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn-submit">Login</button>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+        </form>
+
+        <div class="auth-footer">
+            <p>Belum punya akun? <a href="register.html">Daftar sekarang</a></p>
+            <p><a href="index.html">Kembali ke Beranda</a></p>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
+
+<script>
+const loginForm = document.getElementById('loginForm');
+const roleSelection = document.getElementById('roleSelection');
+const loginRole = document.getElementById('loginRole');
+const errorMessage = document.getElementById('errorMessage');
+
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!email || !password) {
+        errorMessage.textContent = 'Email dan password harus diisi!';
+        return;
+    }
+
+    try {
+        const submitBtn = loginForm.querySelector('.btn-submit');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Login...';
+        submitBtn.disabled = true;
+
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+
+        const userDoc = await db.collection('users').doc(user.uid).get();
+        if (!userDoc.exists) throw new Error('Data user tidak ditemukan');
+
+        const userData = userDoc.data();
+        const roles = userData.roles || [];
+
+        // Kalau lebih dari 1 role, tampilkan pilihan role
+        if (roles.length > 1) {
+            roleSelection.style.display = 'block';
+            loginRole.innerHTML = '';
+            roles.forEach(role => {
+                const option = document.createElement('option');
+                option.value = role;
+                option.textContent = role.charAt(0).toUpperCase() + role.slice(1);
+                loginRole.appendChild(option);
+            });
+
+            submitBtn.textContent = 'Masuk Sebagai Role';
+            submitBtn.disabled = false;
+
+            // Tambahkan listener khusus untuk memilih role
+            loginForm.addEventListener('submit', async function selectRole(e2) {
+                e2.preventDefault();
+                const selectedRole = loginRole.value;
+                window.location.href = selectedRole === 'buyer' ? 'buyer/dashboard.html' : 'seller/dashboard.html';
+                loginForm.removeEventListener('submit', selectRole);
+            }, { once: true });
+
+        } else if (roles.length === 1) {
+            const singleRole = roles[0];
+            window.location.href = singleRole === 'buyer' ? 'buyer/dashboard.html' : 'seller/dashboard.html';
+        } else {
+            throw new Error('Role tidak valid');
+        }
+
+    } catch (error) {
+        console.error(error);
+        errorMessage.textContent = error.message;
+        const submitBtn = loginForm.querySelector('.btn-submit');
+        submitBtn.textContent = 'Login';
+        submitBtn.disabled = false;
+    }
+});
+</script>
+</body>
+</html>

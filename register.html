@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Gunadarma Shop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+<div class="auth-container">
+    <div class="auth-box register-box">
+        <div class="auth-header">
+            <h1>🎓 Gunadarma Shop</h1>
+            <h2>Buat Akun Baru</h2>
+            <p>Bergabunglah dengan marketplace mahasiswa Gunadarma</p>
+        </div>
+
+        <form id="registerForm" class="auth-form">
+            <div class="form-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" id="name" placeholder="Masukkan nama lengkap" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Masukkan email Anda" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">No. WhatsApp</label>
+                <input type="tel" id="phone" placeholder="08xxxxxxxxxx" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Minimal 6 karakter" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Konfirmasi Password</label>
+                <input type="password" id="confirmPassword" placeholder="Masukkan password lagi" required>
+            </div>
+
+            <div class="form-group">
+                <label>Daftar Sebagai:</label>
+                <div class="role-selection">
+                    <label class="role-option">
+                        <input type="radio" name="role" value="buyer" checked>
+                        <span class="role-card">🛒 Buyer</span>
+                    </label>
+                    <label class="role-option">
+                        <input type="radio" name="role" value="seller">
+                        <span class="role-card">💼 Seller</span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="sellerFields" style="display:none;">
+                <div class="form-group">
+                    <label for="storeName">Nama Toko</label>
+                    <input type="text" id="storeName">
+                </div>
+                <div class="form-group">
+                    <label for="storeDescription">Deskripsi Toko</label>
+                    <textarea id="storeDescription" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div id="buyerFields">
+                <div class="form-group">
+                    <label for="address">Alamat Lengkap</label>
+                    <textarea id="address" rows="3" required></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn-submit">Daftar</button>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+        </form>
+
+        <div class="auth-footer">
+            <p>Sudah punya akun? <a href="login.html">Login sekarang</a></p>
+            <p><a href="index.html">Kembali ke Beranda</a></p>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/auth.js"></script>
+
+<script>
+const roleRadios = document.querySelectorAll('input[name="role"]');
+const sellerFields = document.getElementById('sellerFields');
+const buyerFields = document.getElementById('buyerFields');
+
+roleRadios.forEach(radio => {
+    radio.addEventListener('change', function() {
+        if(this.value === 'seller'){
+            sellerFields.style.display = 'block';
+            buyerFields.style.display = 'none';
+            document.getElementById('address').required = false;
+            document.getElementById('storeName').required = true;
+        } else {
+            sellerFields.style.display = 'none';
+            buyerFields.style.display = 'block';
+            document.getElementById('address').required = true;
+            document.getElementById('storeName').required = false;
+        }
+    });
+});
+</script>
+</body>
+</html>
